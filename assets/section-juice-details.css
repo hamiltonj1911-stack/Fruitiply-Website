@@ -29,7 +29,10 @@
   letter-spacing: 0.06rem;
 }
 
+/* Text on juice-tinted backgrounds uses the full foreground color (not
+   Dawn's 75% body opacity) so it stays above 7:1 for any juice color. */
 .juice-badge {
+  color: rgb(var(--color-foreground));
   padding: 0.6rem 1.4rem;
   border: 0.1rem solid var(--juice-accent-resolved);
   border-radius: 10rem;
@@ -75,6 +78,7 @@
 }
 
 .juice-card--feature {
+  color: rgb(var(--color-foreground));
   background-color: var(--juice-accent-tint);
 }
 
