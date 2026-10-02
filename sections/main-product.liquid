@@ -746,9 +746,7 @@
         endif
       -%}
 
-      <script type="application/ld+json">
-        {{ product | structured_data }}
-      </script>
+      {%- render 'juice-structured-data', product: product, seo_media: seo_media -%}
     </div>
   </product-component>
 </product-info>

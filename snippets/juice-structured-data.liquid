@@ -1,0 +1,64 @@
+{% comment %}
+  Product JSON-LD for juice pages, built from product data and fruitiply
+  metafields. Replaces Dawn's `product | structured_data`, which always
+  includes a price/offer. Here an Offer is only output once the juice's
+  availability_status is "available_online", so non-purchasable juices
+  never show a price in search results.
+
+  Accepts:
+  - product: {Object} Product Liquid object
+  - seo_media: {Object} Media to use as the primary image (optional)
+{% endcomment %}
+
+{%- liquid
+  assign juice = product.metafields.fruitiply
+  assign primary_media = seo_media | default: product.featured_media
+  assign description = product.description | strip_html | strip_newlines | strip | truncate: 500
+-%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ request.origin | append: product.url | json }},
+    {%- if description != blank %}
+      "description": {{ description | json }},
+    {%- endif %}
+    {%- if primary_media %}
+      "image": [
+        {{ primary_media | image_url: width: 1200 | prepend: 'https:' | json }}
+        {%- for media in product.media limit: 4 -%}
+          {%- if media.media_type == 'image' and media.id != primary_media.id -%}
+            , {{ media | image_url: width: 1200 | prepend: 'https:' | json }}
+          {%- endif -%}
+        {%- endfor %}
+      ],
+    {%- endif %}
+    {%- if juice.color_name != blank %}
+      "color": {{ juice.color_name.value | json }},
+    {%- endif %}
+    {%- if juice.virtue != blank %}
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "Virtue",
+          "value": {{ juice.virtue.value | json }}
+        }
+      ],
+    {%- endif %}
+    {%- if juice.availability_status.value == 'available_online' %}
+      {%- assign variant = product.selected_or_first_available_variant %}
+      "offers": {
+        "@type": "Offer",
+        "url": {{ request.origin | append: variant.url | json }},
+        "price": {{ variant.price | divided_by: 100.0 | json }},
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}"
+      },
+    {%- endif %}
+    "brand": {
+      "@type": "Brand",
+      "name": {{ shop.name | json }}
+    }
+  }
+</script>

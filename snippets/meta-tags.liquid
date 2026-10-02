@@ -26,7 +26,10 @@
   <meta property="og:image:height" content="{{ page_image.height }}">
 {%- endif -%}
 
-{%- if request.page_type == 'product' -%}
+{%- comment -%} Fruitiply: only share a price once a juice is sold online {%- endcomment -%}
+{%- if request.page_type == 'product'
+  and product.metafields.fruitiply.availability_status.value == 'available_online'
+-%}
   <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
   <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
 {%- endif -%}
