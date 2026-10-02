@@ -1,0 +1,303 @@
+{% comment %}
+  Juice details for the product template. All content comes from product
+  metafields (namespace "fruitiply"); headings and labels are section/block
+  settings so the owner can edit them in the theme editor. Any block whose
+  metafield is empty renders nothing.
+{% endcomment %}
+
+{{ 'section-juice-details.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign juice = product.metafields.fruitiply
+  if section.settings.heading != blank
+    assign block_heading_tag = 'h3'
+  else
+    assign block_heading_tag = 'h2'
+  endif
+-%}
+
+{%- capture meta_html -%}
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'availability' -%}
+        {%- liquid
+          assign status_label = blank
+          case juice.availability_status.value
+            when 'coming_soon'
+              assign status_label = block.settings.coming_soon_label
+            when 'available_in_stores'
+              assign status_label = block.settings.in_stores_label
+            when 'available_online'
+              assign status_label = block.settings.online_label
+          endcase
+        -%}
+        {%- if status_label != blank -%}
+          <p class="juice-badge" {{ block.shopify_attributes }}>
+            <span class="juice-badge__dot" aria-hidden="true"></span>
+            {{ status_label | escape }}
+          </p>
+        {%- endif -%}
+
+      {%- when 'color_name' -%}
+        {%- if juice.color_name != blank -%}
+          <p class="juice-color" {{ block.shopify_attributes }}>
+            <span class="juice-color__swatch" aria-hidden="true"></span>
+            {%- if block.settings.label != blank -%}
+              <span class="juice-color__label">{{ block.settings.label | escape }}</span>
+            {%- endif -%}
+            {{ juice.color_name.value | escape }}
+          </p>
+        {%- endif -%}
+
+      {%- when 'retailer' -%}
+        {%- if juice.retailer_url.value != blank -%}
+          <a
+            href="{{ juice.retailer_url.value }}"
+            class="button button--primary juice-details__retailer"
+            target="_blank"
+            rel="noopener"
+            data-fruitiply-event="retailer_click"
+            {{ block.shopify_attributes }}
+          >
+            {{ block.settings.label | escape }}
+            <span class="visually-hidden">{{ 'accessibility.link_messages.new_window' | t }}</span>
+          </a>
+        {%- endif -%}
+    {%- endcase -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- capture cards_html -%}
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'flavor', 'lesson', 'allergens' -%}
+        {%- assign field = juice[block.type] -%}
+        {%- if field.value != blank -%}
+          <div
+            class="juice-card{% if block.type == 'lesson' %} juice-card--feature{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.heading != blank -%}
+              <{{ block_heading_tag }} class="juice-card__heading h4">{{ block.settings.heading | escape }}</{{ block_heading_tag }}>
+            {%- endif -%}
+            <p class="juice-card__text">{{ field.value | escape | newline_to_br }}</p>
+          </div>
+        {%- endif -%}
+
+      {%- when 'ingredients' -%}
+        {%- if juice.ingredients.value.size > 0 -%}
+          <div class="juice-card" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <{{ block_heading_tag }} class="juice-card__heading h4">{{ block.settings.heading | escape }}</{{ block_heading_tag }}>
+            {%- endif -%}
+            <ul class="juice-card__list" role="list">
+              {%- for ingredient in juice.ingredients.value -%}
+                <li>{{ ingredient | escape }}</li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+      {%- when 'nutrition' -%}
+        {%- assign nutrition_html = juice.nutrition | metafield_tag -%}
+        {%- assign nutrition_text = nutrition_html | strip_html | strip -%}
+        {%- if nutrition_text != blank -%}
+          <div class="juice-card juice-card--wide" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <{{ block_heading_tag }} class="juice-card__heading h4">{{ block.settings.heading | escape }}</{{ block_heading_tag }}>
+            {%- endif -%}
+            <div class="rte">{{ nutrition_html }}</div>
+          </div>
+        {%- endif -%}
+    {%- endcase -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- assign meta_check = meta_html | strip -%}
+{%- assign cards_check = cards_html | strip -%}
+{%- if meta_check != blank or cards_check != blank -%}
+  <div class="color-{{ section.settings.color_scheme }} gradient">
+    <div class="page-width section-{{ section.id }}-padding juice-details">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="juice-details__heading {{ section.settings.heading_size }}">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {%- endif -%}
+      {%- if meta_check != blank -%}
+        <div class="juice-details__meta">{{ meta_html }}</div>
+      {%- endif -%}
+      {%- if cards_check != blank -%}
+        <div class="juice-details__grid">{{ cards_html }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Juice details",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Content comes from each product's Fruitiply metafields (Products > [juice] > Metafields). Empty fields are hidden automatically."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "About this juice"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "availability",
+      "name": "Availability badge",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shows the label matching the product's availability_status metafield."
+        },
+        { "type": "text", "id": "coming_soon_label", "label": "Coming soon label", "default": "Coming soon" },
+        { "type": "text", "id": "in_stores_label", "label": "Available in stores label", "default": "Available in stores" },
+        { "type": "text", "id": "online_label", "label": "Available online label", "default": "Available online" }
+      ]
+    },
+    {
+      "type": "color_name",
+      "name": "Juice color",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Color" }
+      ]
+    },
+    {
+      "type": "retailer",
+      "name": "Where to buy button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Only shows when the product's retailer_url metafield is filled in."
+        },
+        { "type": "text", "id": "label", "label": "Button label", "default": "Where to buy" }
+      ]
+    },
+    {
+      "type": "flavor",
+      "name": "Flavor",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Flavor" }
+      ]
+    },
+    {
+      "type": "ingredients",
+      "name": "Ingredients",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Ingredients" }
+      ]
+    },
+    {
+      "type": "lesson",
+      "name": "Lesson",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "The lesson" }
+      ]
+    },
+    {
+      "type": "nutrition",
+      "name": "Nutrition",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Nutrition" }
+      ]
+    },
+    {
+      "type": "allergens",
+      "name": "Allergens",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Allergens" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Juice details",
+      "blocks": [
+        { "type": "availability" },
+        { "type": "color_name" },
+        { "type": "retailer" },
+        { "type": "flavor" },
+        { "type": "ingredients" },
+        { "type": "lesson" },
+        { "type": "nutrition" },
+        { "type": "allergens" }
+      ]
+    }
+  ]
+}
+{% endschema %}

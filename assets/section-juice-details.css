@@ -1,0 +1,136 @@
+/* Juice details section. Mobile-first; the juice accent color
+   (--juice-accent, set by snippets/juice-accent.liquid) is used only for
+   borders, swatches and tinted backgrounds so text contrast is unaffected. */
+
+.juice-details {
+  --juice-accent-resolved: var(--juice-accent, rgb(var(--color-foreground)));
+  --juice-accent-tint: color-mix(in srgb, var(--juice-accent-resolved) 14%, rgb(var(--color-background)));
+}
+
+.juice-details__heading {
+  margin: 0 0 2.4rem;
+}
+
+.juice-details__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem 2rem;
+  margin-bottom: 3.2rem;
+}
+
+.juice-badge,
+.juice-color {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 0.06rem;
+}
+
+.juice-badge {
+  padding: 0.6rem 1.4rem;
+  border: 0.1rem solid var(--juice-accent-resolved);
+  border-radius: 10rem;
+  background-color: var(--juice-accent-tint);
+}
+
+.juice-badge__dot,
+.juice-color__swatch {
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--juice-accent-resolved);
+}
+
+.juice-badge__dot {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.juice-color__swatch {
+  width: 2rem;
+  height: 2rem;
+  box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.2);
+}
+
+.juice-color__label {
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.juice-color__label::after {
+  content: ':';
+}
+
+.juice-details__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.juice-card {
+  padding: 2.4rem;
+  border-top: 0.3rem solid var(--juice-accent-resolved);
+  background-color: rgba(var(--color-foreground), 0.03);
+}
+
+.juice-card--feature {
+  background-color: var(--juice-accent-tint);
+}
+
+.juice-card__heading {
+  margin: 0 0 1.2rem;
+}
+
+.juice-card__text {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.juice-card--feature .juice-card__text {
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-size: 2rem;
+  line-height: 1.5;
+}
+
+.juice-card__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.juice-card__list li {
+  padding: 0.4rem 1.2rem;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+  border-radius: 10rem;
+  font-size: 1.4rem;
+}
+
+.juice-card .rte > :first-child {
+  margin-top: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .juice-details__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.4rem;
+  }
+
+  .juice-card {
+    padding: 3.2rem;
+  }
+
+  .juice-card--feature,
+  .juice-card--wide {
+    grid-column: 1 / -1;
+  }
+
+  .juice-card--feature .juice-card__text {
+    font-size: 2.4rem;
+    max-width: 60ch;
+  }
+}

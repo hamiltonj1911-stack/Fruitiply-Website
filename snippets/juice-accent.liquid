@@ -1,0 +1,21 @@
+{% comment %}
+  Exposes a juice's accent color (product metafield fruitiply.color) as CSS
+  custom properties for the current page. Accents are used for borders,
+  swatches, and tinted backgrounds only; text keeps the theme's colors so
+  contrast never depends on the juice color.
+
+  Accepts:
+  - product: {Object} Product Liquid object
+
+  Usage:
+  {% render 'juice-accent', product: product %}
+{% endcomment %}
+
+{%- assign juice_accent = product.metafields.fruitiply.color.value -%}
+{%- if juice_accent != blank -%}
+  <style>
+    :root {
+      --juice-accent: {{ juice_accent }};
+    }
+  </style>
+{%- endif -%}
