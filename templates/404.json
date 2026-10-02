@@ -1,7 +1,19 @@
 {
   "sections": {
     "main": {
-      "type": "main-404"
+      "type": "fruitiply-404",
+      "settings": {
+        "caption": "404",
+        "heading": "Page not found",
+        "text": "<p>The page you're looking for may have moved or no longer exists.</p>",
+        "button_label_1": "Back to home",
+        "button_link_1": "/",
+        "button_label_2": "Explore the Juices",
+        "button_link_2": "shopify://collections/all",
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     }
   },
   "order": [
