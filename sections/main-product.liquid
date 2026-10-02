@@ -746,6 +746,7 @@
         endif
       -%}
 
+      {%- comment -%} Fruitiply: replaces product | structured_data (no price until sold online) {%- endcomment -%}
       {%- render 'juice-structured-data', product: product, seo_media: seo_media -%}
     </div>
   </product-component>
