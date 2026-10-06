@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — Fruitiply</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  :root{--cream:#FAF6EF;--ink:#1E3A2A;--gold:#C8942A;--soft:#4A5C50}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;
+       display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 6vw}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2.2rem,6vw,3.6rem);margin:24px 0 14px}
+  h1 em{font-style:italic}
+  p{color:var(--soft);max-width:34rem;margin-bottom:32px}
+  .eyebrow{font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .tree{font-size:4.5rem;animation:sway 6s ease-in-out infinite;transform-origin:bottom center}
+  @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  a.btn{display:inline-block;background:var(--ink);color:var(--cream);padding:14px 32px;border-radius:999px;
+        font-weight:600;text-decoration:none;font-size:.95rem;transition:background .2s}
+  a.btn:hover{background:#2c5440}
+  a.plain{display:block;margin-top:18px;color:var(--soft);font-size:.9rem}
+  a.plain:hover{color:var(--gold)}
+  @media(prefers-reduced-motion:reduce){.tree{animation:none}}
+</style>
+</head>
+<body>
+  <div class="tree" role="img" aria-label="A small tree with a missing fruit">🌳🍃</div>
+  <p class="eyebrow">Error 404</p>
+  <h1>This branch has <em>no fruit</em> on it.</h1>
+  <p>The page you're looking for may have moved, been pressed out of rotation, or never existed. Let's get you back to the good stuff.</p>
+  <a class="btn" href="/">Return to the Grove</a>
+  <a class="plain" href="/">Explore the Nine Juices</a>
+</body>
+</html>
