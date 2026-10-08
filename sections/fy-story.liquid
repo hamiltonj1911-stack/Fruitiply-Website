@@ -1,0 +1,68 @@
+{% comment %}
+  Fruitiply story + brand philosophy: story text and pull quote on the left,
+  philosophy list (blocks) on the right.
+{% endcomment %}
+
+<section class="fy fy-story" id="{{ section.settings.anchor | default: 'story' | handleize }}" aria-labelledby="FyStoryHeading-{{ section.id }}">
+  <div class="fy-wrap fy-story__grid">
+    <div>
+      <h2 id="FyStoryHeading-{{ section.id }}">
+        {{- section.settings.heading | escape }}
+        {% if section.settings.heading_italic != blank %}<em>{{ section.settings.heading_italic | escape }}</em>{% endif -%}
+      </h2>
+      {%- if section.settings.text != blank -%}
+        <div class="fy-story__body">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.quote != blank -%}
+        <blockquote class="fy-quote">
+          {{ section.settings.quote | escape }}
+          {%- if section.settings.quote_cite != blank -%}
+            <cite>{{ section.settings.quote_cite | escape }}</cite>
+          {%- endif -%}
+        </blockquote>
+      {%- endif -%}
+    </div>
+    {%- if section.blocks.size > 0 -%}
+      <div>
+        {%- if section.settings.list_heading != blank -%}
+          <h3 class="fy-story__subhead">{{ section.settings.list_heading | escape }}</h3>
+        {%- endif -%}
+        <ul class="fy-philosophy" role="list">
+          {%- for block in section.blocks -%}
+            <li class="fy-reveal" {{ block.shopify_attributes }}>
+              <strong>{{ block.settings.title | escape }}</strong>
+              <span>{{ block.settings.text | escape }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Fruitiply story",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Story —" },
+    { "type": "text", "id": "heading_italic", "label": "Heading, italic ending", "default": "Pressed Slowly, Grown Faithfully" },
+    { "type": "richtext", "id": "text", "label": "Story text" },
+    { "type": "textarea", "id": "quote", "label": "Pull quote" },
+    { "type": "text", "id": "quote_cite", "label": "Quote source" },
+    { "type": "text", "id": "list_heading", "label": "List heading", "default": "Brand Philosophy" },
+    { "type": "text", "id": "anchor", "label": "Link anchor", "info": "Menu links to #story jump here.", "default": "story" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Philosophy item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Fruitiply story" }]
+}
+{% endschema %}

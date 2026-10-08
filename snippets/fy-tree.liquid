@@ -1,0 +1,39 @@
+{% comment %}
+  Animated tree of life for the hero (decorative SVG; the wrapper provides
+  the accessible label). Animations stop under prefers-reduced-motion.
+{% endcomment %}
+<svg viewBox="0 0 400 520" aria-hidden="true" focusable="false">
+  <ellipse cx="200" cy="492" rx="165" ry="22" fill="#D8C79A" opacity=".55"/>
+  <g class="fy-tree-sway">
+    <path class="fy-draw" d="M200 490 C195 430 186 402 191 362 C195 332 200 322 198 300" stroke="#6B4A2F" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <path class="fy-draw" d="M192 366 C168 348 150 338 128 326" stroke="#6B4A2F" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path class="fy-draw" d="M196 342 C226 328 250 322 272 308" stroke="#6B4A2F" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <circle cx="200" cy="252" r="82" fill="#5E8C5A"/>
+    <circle cx="136" cy="286" r="56" fill="#6FA065"/>
+    <circle cx="266" cy="282" r="56" fill="#6FA065"/>
+    <circle cx="200" cy="306" r="58" fill="#4C7A3F"/>
+    <circle cx="168" cy="218" r="24" fill="#8FB08F" opacity=".7"/>
+    <circle cx="238" cy="228" r="20" fill="#8FB08F" opacity=".7"/>
+    <g class="fy-fruit"><circle cx="158" cy="252" r="9" fill="#E8899B"/></g>
+    <g class="fy-fruit" style="animation-delay:.35s"><circle cx="205" cy="216" r="9" fill="#F2A03D"/></g>
+    <g class="fy-fruit" style="animation-delay:.7s"><circle cx="248" cy="252" r="9" fill="#8FB08F"/></g>
+    <g class="fy-fruit" style="animation-delay:1.05s"><circle cx="126" cy="292" r="9" fill="#9B59B6"/></g>
+    <g class="fy-fruit" style="animation-delay:1.4s"><circle cx="278" cy="290" r="9" fill="#F08A4B"/></g>
+    <g class="fy-fruit" style="animation-delay:1.75s"><circle cx="182" cy="296" r="9" fill="#7AA653"/></g>
+    <g class="fy-fruit" style="animation-delay:2.1s"><circle cx="228" cy="292" r="9" fill="#4A6FC0"/></g>
+    <g class="fy-fruit" style="animation-delay:2.45s"><circle cx="180" cy="182" r="9" fill="#C98BB0"/></g>
+    <g class="fy-fruit" style="animation-delay:2.8s"><circle cx="222" cy="180" r="9" fill="#A8BF7E"/></g>
+    <g class="fy-leaf"><ellipse cx="150" cy="330" rx="7" ry="4" fill="#8FB08F"/></g>
+    <g class="fy-leaf" style="animation-delay:2.6s"><ellipse cx="262" cy="320" rx="7" ry="4" fill="#6FA065"/></g>
+    <g class="fy-leaf" style="animation-delay:5.2s"><ellipse cx="205" cy="340" rx="7" ry="4" fill="#5E8C5A"/></g>
+  </g>
+  <g class="fy-spirit"><circle cx="118" cy="330" r="16" fill="url(#fy-glow)"/><text x="108" y="337" font-size="20">🕊️</text></g>
+  <g class="fy-spirit" style="animation-delay:3s"><circle cx="292" cy="300" r="16" fill="url(#fy-glow)"/><text x="282" y="307" font-size="20">🕊️</text></g>
+  <g class="fy-spirit" style="animation-delay:6s"><circle cx="205" cy="160" r="16" fill="url(#fy-glow)"/><text x="195" y="167" font-size="20">🕊️</text></g>
+  <defs>
+    <radialGradient id="fy-glow">
+      <stop offset="0%" stop-color="#C8942A" stop-opacity=".5"/>
+      <stop offset="100%" stop-color="#C8942A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

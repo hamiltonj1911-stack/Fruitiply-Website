@@ -39,7 +39,7 @@
 
     if (named) {
       publish(named, { label: label, url: link.href });
-    } else if (link.classList.contains('button') && link.closest('main')) {
+    } else if ((link.classList.contains('button') || link.classList.contains('fy-btn')) && link.closest('main')) {
       publish('cta_click', { label: label, url: link.href });
     }
   });

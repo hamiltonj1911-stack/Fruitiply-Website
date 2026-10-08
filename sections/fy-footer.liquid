@@ -1,0 +1,64 @@
+{% comment %}
+  Fruitiply footer: logo + short description, link columns (each a block
+  pointing at a menu from Online Store > Navigation), copyright and verse.
+{% endcomment %}
+
+<footer class="fy fy--dark fy-footer">
+  <div class="fy-wrap">
+    <div class="fy-footer__grid">
+      <div class="fy-footer__brand">
+        <p class="fy-logo">
+          {{- section.settings.logo_text | escape -}}
+          {%- if section.settings.logo_text_accent != blank -%}<em>{{ section.settings.logo_text_accent | escape }}</em>{%- endif -%}
+          {{- section.settings.logo_text_suffix | escape -}}
+        </p>
+        {%- if section.settings.text != blank -%}
+          <p>{{ section.settings.text | escape }}</p>
+        {%- endif -%}
+      </div>
+      {%- for block in section.blocks -%}
+        {%- if block.settings.menu.links.size > 0 -%}
+          <nav class="fy-footer__col" aria-labelledby="FyFooterCol-{{ block.id }}" {{ block.shopify_attributes }}>
+            <h2 id="FyFooterCol-{{ block.id }}">{{ block.settings.heading | escape }}</h2>
+            <ul role="list">
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </nav>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="fy-footer__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright | escape }}</span>
+      {%- if section.settings.verse != blank -%}
+        <span class="fy-footer__verse">{{ section.settings.verse | escape }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Fruitiply footer",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Text logo", "default": "Fruit" },
+    { "type": "text", "id": "logo_text_accent", "label": "Text logo: italic gold part", "default": "iply" },
+    { "type": "text", "id": "logo_text_suffix", "label": "Text logo: ending", "default": "." },
+    { "type": "textarea", "id": "text", "label": "Description" },
+    { "type": "text", "id": "copyright", "label": "Copyright text", "info": "The current year is added automatically.", "default": "Fruitiply · The Clientele Collective LLC. All rights reserved." },
+    { "type": "text", "id": "verse", "label": "Verse / sign-off" }
+  ],
+  "blocks": [
+    {
+      "type": "links",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Explore" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    }
+  ],
+  "max_blocks": 4
+}
+{% endschema %}

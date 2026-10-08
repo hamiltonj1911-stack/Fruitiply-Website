@@ -324,6 +324,7 @@
       {%- render 'juice-accent', product: product -%}
     {%- endif -%}
     <script src="{{ 'fruitiply-analytics.js' | asset_url }}" defer="defer"></script>
+    {%- render 'fruitiply-head' -%}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">

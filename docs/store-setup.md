@@ -34,10 +34,16 @@ built-in "all products" collection).
 
 ## 3. Navigation menus
 
-**Online Store → Navigation.**
+**Online Store → Navigation.** The header and footer read these menus.
 
-- **Main menu:** The Juices (collection), Our Story, About, FAQ, Contact
-- **Footer menu:** Where to Find Us, FAQ, Contact, Privacy Policy, Terms of Service
+- **Main menu** (header + footer "Explore" column): The Nine Juices → `/#juices`,
+  Our Story → `/#story`, FAQ → `/#faq`, Where to Find Us → `/#find`
+  (links to sections of the home page; full pages can be swapped in later)
+- **Footer menu** (footer "Support" column): Contact → `/#join`,
+  Privacy Policy, Terms of Service (pick them from the policy list)
+
+The header's "Join the Community" button is set in the theme editor
+(Header → Fruitiply header).
 
 ## 4. Policies (legal text from the client's attorney)
 
@@ -57,3 +63,11 @@ and its wording can be edited there once the attorney approves it.
 Messages go to the store's sender email (**Settings → Notifications → Sender
 email**). Shopify adds spam protection (hCaptcha) automatically; confirm it's on
 under **Online Store → Preferences → Spam protection**.
+
+## 7. Connect the theme to GitHub
+
+**Online Store → Themes → Add theme → Connect from GitHub.** Log in with the
+GitHub account that owns `Fruitiply-Website`, install the Shopify app on that
+repository, then pick the repo and the `main` branch. The theme arrives
+**unpublished**; preview it before publishing. From then on, pushes to `main`
+update the theme, and theme editor changes are committed back to the repo.

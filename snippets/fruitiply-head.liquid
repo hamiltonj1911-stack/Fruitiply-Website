@@ -1,0 +1,33 @@
+{% comment %}
+  Fruitiply brand layer: fonts, brand color variables (Theme settings >
+  Fruitiply brand), the design stylesheet and its small script.
+  Rendered at the end of <head> in layout/theme.liquid.
+{% endcomment %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300..700&display=swap"
+  rel="stylesheet"
+>
+
+{%- liquid
+  assign cream = settings.fy_color_cream | default: '#FAF6EF'
+  assign ink = settings.fy_color_ink | default: '#1E3A2A'
+-%}
+<style>
+  :root {
+    --fy-cream: {{ cream }};
+    --fy-cream-rgb: {{ cream | color_extract: 'red' }}, {{ cream | color_extract: 'green' }}, {{ cream | color_extract: 'blue' }};
+    --fy-ink: {{ ink }};
+    --fy-ink-rgb: {{ ink | color_extract: 'red' }}, {{ ink | color_extract: 'green' }}, {{ ink | color_extract: 'blue' }};
+    --fy-ink-hover: {{ ink | color_lighten: 8 }};
+    --fy-ink-soft: {{ settings.fy_color_ink_soft | default: '#4A5C50' }};
+    --fy-gold: {{ settings.fy_color_gold | default: '#C8942A' }};
+    --fy-gold-text: {{ settings.fy_color_gold_text | default: '#8F6714' }};
+    --fy-surface: {{ settings.fy_color_surface | default: '#FFFFFF' }};
+  }
+</style>
+
+{{ 'fruitiply.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'fruitiply.js' | asset_url }}" defer="defer"></script>

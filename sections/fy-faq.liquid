@@ -1,0 +1,49 @@
+{% comment %}
+  Fruitiply FAQ. Each question is a block (add, edit, reorder in the theme
+  editor). Uses native <details>, so it works by keyboard and without JS.
+{% endcomment %}
+
+<section class="fy fy-faq" id="{{ section.settings.anchor | default: 'faq' | handleize }}" aria-labelledby="FyFaqHeading-{{ section.id }}">
+  <div class="fy-wrap fy-faq__inner">
+    <div class="fy-section-head">
+      <h2 id="FyFaqHeading-{{ section.id }}">
+        {{- section.settings.heading | escape }}
+        {% if section.settings.heading_italic != blank %}<em>{{ section.settings.heading_italic | escape }}</em>{% endif -%}
+      </h2>
+    </div>
+    {%- for block in section.blocks -%}
+      <details class="fy-faq__item" {{ block.shopify_attributes }}>
+        <summary><h3>{{ block.settings.question | escape }}</h3></summary>
+        <div class="fy-faq__answer">{{ block.settings.answer }}</div>
+      </details>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Fruitiply FAQ",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently" },
+    { "type": "text", "id": "heading_italic", "label": "Heading, italic ending", "default": "Asked" },
+    { "type": "text", "id": "anchor", "label": "Link anchor", "info": "Menu links to #faq jump here.", "default": "faq" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fruitiply FAQ",
+      "blocks": [{ "type": "question" }, { "type": "question" }, { "type": "question" }]
+    }
+  ]
+}
+{% endschema %}

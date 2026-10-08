@@ -1,0 +1,54 @@
+{% comment %}
+  Fruitiply pillars: numbered columns (Growth / Nourishment / Family).
+{% endcomment %}
+
+<section class="fy fy-pillars" aria-labelledby="FyPillarsHeading-{{ section.id }}">
+  <div class="fy-wrap">
+    <h2 id="FyPillarsHeading-{{ section.id }}" class="visually-hidden">{{ section.settings.heading | escape }}</h2>
+    <div class="fy-pillars__grid">
+      {%- for block in section.blocks -%}
+        <div class="fy-pillar fy-reveal" {{ block.shopify_attributes }}>
+          <p class="fy-pillar__num">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</p>
+          <h3>{{ block.settings.title | escape }}</h3>
+          <p>{{ block.settings.text | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Fruitiply pillars",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (for screen readers only)",
+      "default": "What Fruitiply stands for"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Growth" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Fruitiply pillars",
+      "blocks": [
+        { "type": "pillar", "settings": { "title": "Growth" } },
+        { "type": "pillar", "settings": { "title": "Nourishment" } },
+        { "type": "pillar", "settings": { "title": "Family" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

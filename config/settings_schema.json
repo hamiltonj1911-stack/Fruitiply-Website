@@ -8,6 +8,52 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "Fruitiply brand",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Brand colors used by the Fruitiply sections, header and footer. Keep text colors dark enough to read on the cream background (WCAG AA: 4.5:1)."
+      },
+      {
+        "type": "color",
+        "id": "fy_color_cream",
+        "label": "Background (cream)",
+        "default": "#FAF6EF"
+      },
+      {
+        "type": "color",
+        "id": "fy_color_ink",
+        "label": "Text (deep botanical green)",
+        "default": "#1E3A2A"
+      },
+      {
+        "type": "color",
+        "id": "fy_color_ink_soft",
+        "label": "Secondary text",
+        "default": "#4A5C50"
+      },
+      {
+        "type": "color",
+        "id": "fy_color_gold",
+        "label": "Gold accent (buttons, borders, dark backgrounds)",
+        "default": "#C8942A"
+      },
+      {
+        "type": "color",
+        "id": "fy_color_gold_text",
+        "label": "Gold for text on light backgrounds",
+        "info": "Must stay darker than the accent gold so small text is readable.",
+        "default": "#8F6714"
+      },
+      {
+        "type": "color",
+        "id": "fy_color_surface",
+        "label": "Alternate section background",
+        "default": "#FFFFFF"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.logo.name",
     "settings": [
       {

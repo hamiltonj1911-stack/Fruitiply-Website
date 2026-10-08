@@ -1,105 +1,58 @@
 {% comment %}
-  Custom 404 page. Replaces Dawn's main-404 so the heading, message and
-  buttons are editable in the theme editor (Dawn's version is fixed text
-  with a "Continue shopping" button).
+  Custom 404 page (Fruitiply design). Replaces Dawn's main-404 so the
+  heading, message and links are editable in the theme editor.
 {% endcomment %}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-
-  .fruitiply-404 {
-    max-width: 64rem;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .fruitiply-404__caption {
-    margin: 0 0 1.2rem;
-    letter-spacing: 0.2rem;
-    text-transform: uppercase;
-  }
-
-  .fruitiply-404__heading {
-    margin: 0;
-  }
-
-  .fruitiply-404__text {
-    margin: 2rem 0 0;
-  }
-
-  .fruitiply-404__buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.2rem;
-    margin-top: 3.2rem;
-  }
-{%- endstyle -%}
-
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="page-width section-{{ section.id }}-padding">
-    <div class="fruitiply-404">
-      {%- if section.settings.caption != blank -%}
-        <p class="fruitiply-404__caption caption">{{ section.settings.caption | escape }}</p>
-      {%- endif -%}
-      <h1 class="fruitiply-404__heading h1">{{ section.settings.heading | escape }}</h1>
-      {%- if section.settings.text != blank -%}
-        <div class="fruitiply-404__text rte">{{ section.settings.text }}</div>
-      {%- endif -%}
-      <div class="fruitiply-404__buttons">
-        {%- if section.settings.button_label_1 != blank -%}
-          <a href="{{ section.settings.button_link_1 | default: routes.root_url }}" class="button">
-            {{- section.settings.button_label_1 | escape -}}
-          </a>
-        {%- endif -%}
-        {%- if section.settings.button_label_2 != blank -%}
-          <a
-            href="{{ section.settings.button_link_2 | default: routes.all_products_collection_url }}"
-            class="button button--secondary"
-          >
-            {{- section.settings.button_label_2 | escape -}}
-          </a>
-        {%- endif -%}
-      </div>
-    </div>
-  </div>
+<div class="fy fy-404">
+  {%- if section.settings.show_tree -%}
+    <div class="fy-404__tree" aria-hidden="true">🌳🍃</div>
+  {%- endif -%}
+  {%- if section.settings.caption != blank -%}
+    <p class="fy-eyebrow">{{ section.settings.caption | escape }}</p>
+  {%- endif -%}
+  <h1>
+    {{- section.settings.heading | escape }}
+    {% if section.settings.heading_italic != blank %}<em>{{ section.settings.heading_italic | escape }}</em>{% endif -%}
+    {{- section.settings.heading_end | escape -}}
+  </h1>
+  {%- if section.settings.text != blank -%}
+    <p class="fy-404__text">{{ section.settings.text | escape }}</p>
+  {%- endif -%}
+  {%- if section.settings.button_label_1 != blank -%}
+    <a href="{{ section.settings.button_link_1 | default: routes.root_url }}" class="fy-btn fy-btn--dark">
+      {{- section.settings.button_label_1 | escape -}}
+    </a>
+  {%- endif -%}
+  {%- if section.settings.button_label_2 != blank -%}
+    <a href="{{ section.settings.button_link_2 | default: routes.all_products_collection_url }}" class="fy-404__plain">
+      {{- section.settings.button_label_2 | escape -}}
+    </a>
+  {%- endif -%}
 </div>
 
 {% schema %}
 {
   "name": "404 message",
   "tag": "section",
-  "class": "section",
   "enabled_on": {
     "templates": ["404"]
   },
   "settings": [
-    { "type": "text", "id": "caption", "label": "Caption", "default": "404" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Page not found" },
+    { "type": "checkbox", "id": "show_tree", "label": "Show swaying tree", "default": true },
+    { "type": "text", "id": "caption", "label": "Caption", "default": "Error 404" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "This branch has" },
+    { "type": "text", "id": "heading_italic", "label": "Heading, italic part", "default": "no fruit" },
+    { "type": "text", "id": "heading_end", "label": "Heading, ending", "default": " on it." },
     {
-      "type": "richtext",
+      "type": "textarea",
       "id": "text",
       "label": "Message",
-      "default": "<p>The page you're looking for may have moved or no longer exists.</p>"
+      "default": "The page you're looking for may have moved, been pressed out of rotation, or never existed. Let's get you back to the good stuff."
     },
-    { "type": "text", "id": "button_label_1", "label": "First button label", "default": "Back to home" },
-    { "type": "url", "id": "button_link_1", "label": "First button link" },
-    { "type": "text", "id": "button_label_2", "label": "Second button label", "default": "Explore the Juices" },
-    { "type": "url", "id": "button_link_2", "label": "Second button link" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
-    { "type": "header", "content": "Section padding" },
-    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 80 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 80 }
+    { "type": "text", "id": "button_label_1", "label": "Button label", "default": "Return to the Grove" },
+    { "type": "url", "id": "button_link_1", "label": "Button link" },
+    { "type": "text", "id": "button_label_2", "label": "Second link label", "default": "Explore the Nine Juices" },
+    { "type": "url", "id": "button_link_2", "label": "Second link" }
   ],
   "presets": [{ "name": "404 message" }]
 }
