@@ -1,0 +1,182 @@
+{% comment %}
+  Fruitiply product chapters (Act I). Each block is one launch juice shown as
+  a full-width "chapter": large image, virtue name, color name, flavor
+  profile, ingredients, short story/meaning and launch status. Content comes
+  from the chosen product and its fruitiply.* metafields; the block can
+  override the image and story. Add a chapter only when a juice is ready to
+  be revealed. Blocks without a product don't render on the live site.
+{% endcomment %}
+
+{%- liquid
+  assign visible_chapters = 0
+  for block in section.blocks
+    if block.settings.product != blank
+      assign visible_chapters = visible_chapters | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if visible_chapters > 0 or request.design_mode -%}
+  <section class="fy fy-chapters" id="{{ section.settings.anchor | default: 'juices' | handleize }}" aria-labelledby="FyChaptersHeading-{{ section.id }}">
+    <div class="fy-wrap">
+      <div class="fy-chapters__head">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="fy-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h2 id="FyChaptersHeading-{{ section.id }}">
+          {{- section.settings.heading | escape }}
+          {% if section.settings.heading_italic != blank %}<em>{{ section.settings.heading_italic | escape }}</em>{% endif -%}
+        </h2>
+        {%- if section.settings.text != blank -%}
+          <p class="fy-chapters__intro">{{ section.settings.text | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- assign product = block.settings.product -%}
+        {%- if product == blank -%}
+          {%- if request.design_mode -%}
+            <div class="fy-chapter fy-chapter--empty" {{ block.shopify_attributes }}>
+              <p>{{ block.settings.chapter_label | escape }}: choose a product for this chapter. (Only you see this message.)</p>
+            </div>
+          {%- endif -%}
+          {%- continue -%}
+        {%- endif -%}
+
+        {%- liquid
+          assign juice = product.metafields.fruitiply
+          assign virtue = juice.virtue.value | default: product.title
+          assign image = block.settings.image | default: product.featured_image
+          assign status_class = 'available'
+          case juice.availability_status.value
+            when 'available_in_stores'
+              assign status_label = section.settings.label_in_stores
+            when 'available_online'
+              assign status_label = section.settings.label_online
+            else
+              assign status_label = section.settings.label_coming_soon
+              assign status_class = 'soon'
+          endcase
+        -%}
+        <article
+          class="fy-chapter{% cycle '', ' fy-chapter--flip' %} fy-reveal"
+          {% if juice.color != blank %}style="--juice-color: {{ juice.color.value }};"{% endif %}
+          aria-labelledby="FyChapter-{{ block.id }}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="fy-chapter__media">
+            {%- if image != blank -%}
+              {{
+                image
+                | image_url: width: 1400
+                | image_tag:
+                  loading: 'lazy',
+                  sizes: '(min-width: 900px) 50vw, 100vw',
+                  widths: '500, 700, 900, 1100, 1400',
+                  alt: image.alt
+              }}
+            {%- else -%}
+              <div class="fy-chapter__placeholder" aria-hidden="true"></div>
+            {%- endif -%}
+          </div>
+          <div class="fy-chapter__body">
+            <div class="fy-chapter__meta">
+              {%- if block.settings.chapter_label != blank -%}
+                <span class="fy-chapter__label">{{ block.settings.chapter_label | escape }}</span>
+              {%- endif -%}
+              <span class="fy-status fy-status--{{ status_class }}">{{ status_label | escape }}</span>
+            </div>
+            <h3 id="FyChapter-{{ block.id }}">{{ virtue | escape }}</h3>
+            {%- if juice.color_name != blank -%}
+              <p class="fy-chapter__color">{{ juice.color_name.value | escape }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.story != blank -%}
+              <div class="fy-chapter__story">{{ block.settings.story }}</div>
+            {%- elsif juice.lesson != blank -%}
+              <div class="fy-chapter__story"><p>{{ juice.lesson.value | escape | newline_to_br }}</p></div>
+            {%- endif -%}
+
+            {%- if juice.flavor != blank or juice.ingredients.value.size > 0 -%}
+              <dl class="fy-chapter__facts">
+                {%- if juice.flavor != blank -%}
+                  <div>
+                    <dt>{{ section.settings.label_flavor | escape }}</dt>
+                    <dd>{{ juice.flavor.value | escape | newline_to_br }}</dd>
+                  </div>
+                {%- endif -%}
+                {%- if juice.ingredients.value.size > 0 -%}
+                  <div>
+                    <dt>{{ section.settings.label_ingredients | escape }}</dt>
+                    <dd>{{ juice.ingredients.value | join: ' · ' | escape }}</dd>
+                  </div>
+                {%- endif -%}
+              </dl>
+            {%- endif -%}
+
+            {%- if block.settings.button_label != blank -%}
+              <a class="fy-btn fy-btn--line" href="{{ product.url }}">
+                {{- block.settings.button_label | escape -}}
+                <span class="visually-hidden">: {{ virtue | escape }}</span>
+              </a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Fruitiply chapters",
+  "tag": "div",
+  "settings": [
+    { "type": "paragraph", "content": "One chapter per launched juice, in story order. Add a chapter only when that juice is ready to be revealed." },
+    { "type": "text", "id": "eyebrow", "label": "Small text above heading", "default": "Coming Soon" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The First" },
+    { "type": "text", "id": "heading_italic", "label": "Heading, italic ending", "default": "Chapters" },
+    { "type": "textarea", "id": "text", "label": "Intro text" },
+    { "type": "text", "id": "anchor", "label": "Link anchor", "info": "Menu links to #juices jump here.", "default": "juices" },
+    { "type": "header", "content": "Labels" },
+    { "type": "text", "id": "label_coming_soon", "label": "Coming soon", "default": "Coming Soon" },
+    { "type": "text", "id": "label_in_stores", "label": "Available in stores", "info": "Only shown once a product's availability_status is set to available_in_stores.", "default": "In Stores" },
+    { "type": "text", "id": "label_online", "label": "Available online", "default": "Available Online" },
+    { "type": "text", "id": "label_flavor", "label": "Flavor label", "default": "Flavor profile" },
+    { "type": "text", "id": "label_ingredients", "label": "Ingredients label", "default": "Ingredients" }
+  ],
+  "blocks": [
+    {
+      "type": "chapter",
+      "name": "Chapter",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Juice" },
+        { "type": "text", "id": "chapter_label", "label": "Chapter label", "default": "Chapter I" },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Leave empty to use the product's main image. Tall images (4:5) work best."
+        },
+        {
+          "type": "richtext",
+          "id": "story",
+          "label": "Story / meaning",
+          "info": "Leave empty to use the product's Lesson metafield."
+        },
+        { "type": "text", "id": "button_label", "label": "Button label", "info": "Links to the juice's page. Leave empty to hide.", "default": "Discover" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fruitiply chapters",
+      "blocks": [
+        { "type": "chapter", "settings": { "chapter_label": "Chapter I" } },
+        { "type": "chapter", "settings": { "chapter_label": "Chapter II" } },
+        { "type": "chapter", "settings": { "chapter_label": "Chapter III" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

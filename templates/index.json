@@ -22,7 +22,7 @@
         "join": {
           "type": "button",
           "settings": {
-            "label": "Join the Community",
+            "label": "Get First Access",
             "link": "#join",
             "style": "outline"
           }
@@ -34,13 +34,12 @@
         "join"
       ],
       "settings": {
-        "eyebrow": "Premium Cold-Pressed Juice · Nine Fruits of the Spirit",
+        "eyebrow": "Premium Cold-Pressed Juice",
         "heading_line_1": "Grow Good.",
         "heading_line_2": "Multiply Good.",
-        "text": "Nine cold-pressed juices, each named for a Fruit of the Spirit — crafted to nourish your body, grow your habits, and gather your people around something good.",
-        "tree_alt": "Animated tree bearing nine fruits, with gentle spirits rising around it",
-        "badge_title": "Nine Juices. Nine Virtues.",
-        "badge_text": "One good habit at a time."
+        "text": "Cold-pressed juice crafted to nourish your body, grow your habits, and gather your people around something good.",
+        "badge_title": "",
+        "badge_text": ""
       }
     },
     "pillars": {
@@ -75,22 +74,6 @@
       ],
       "settings": {
         "heading": "What Fruitiply stands for"
-      }
-    },
-    "juices": {
-      "type": "fy-juices",
-      "settings": {
-        "heading": "The Nine",
-        "heading_italic": "Juices",
-        "text": "Each bottle is named for a Fruit of the Spirit and carries its own color, character, and lesson. Every recipe is built from whole fruit — pressed slowly, never hurried.",
-        "collection": "",
-        "limit": 9,
-        "anchor": "juices",
-        "label_in_stores": "In Stores",
-        "label_online": "Available Online",
-        "label_coming_soon": "Coming Soon",
-        "label_ingredients": "Ingredients",
-        "label_lesson": "The Lesson"
       }
     },
     "story": {
@@ -134,9 +117,9 @@
       "settings": {
         "heading": "Our Story —",
         "heading_italic": "Pressed Slowly, Grown Faithfully",
-        "text": "<p>Fruitiply began with a simple idea: that what we drink every day could stand for something better. Nine fruits of the Spirit, nine honest recipes — each one a small reminder that good things grow over time.</p><p>We press in small batches, label every ingredient plainly, and name each juice after the virtue it represents. Not as a sermon — as a habit. Something you can reach for on an ordinary Tuesday.</p>",
-        "quote": "\"But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness and self-control.\"",
-        "quote_cite": "Galatians 5 : 22–23",
+        "text": "<p>Fruitiply began with a simple idea: that what we drink every day could stand for something better.</p><p>[PLACEHOLDER] Founder story and the meaning behind Love, Peace, and Joy. Final narrative copy to come.</p>",
+        "quote": "",
+        "quote_cite": "",
         "list_heading": "Brand Philosophy",
         "anchor": "story"
       }
@@ -151,18 +134,11 @@
             "answer": "<p>Cold-pressing uses hydraulic pressure instead of blades or heat, which keeps more of the fruit's natural flavor and character intact. [Placeholder copy — final wording pending.]</p>"
           }
         },
-        "q2": {
-          "type": "question",
-          "settings": {
-            "question": "Why are the juices named after the Fruits of the Spirit?",
-            "answer": "<p>Each of our nine juices is named for one of the nine Fruits of the Spirit from Galatians 5:22–23. Every bottle carries a short reflection on its virtue — a small daily reminder, not a lecture. [Placeholder copy.]</p>"
-          }
-        },
         "q3": {
           "type": "question",
           "settings": {
             "question": "Where can I buy Fruitiply?",
-            "answer": "<p>Our juices are rolling out to select retailers. See the \"Where to Find Us\" section below for current availability — and check back, because new stores are being added. [Placeholder copy.]</p>"
+            "answer": "<p>Fruitiply isn’t available yet. Join the community to be the first to know when and where you can find it. [Placeholder copy.]</p>"
           }
         },
         "q4": {
@@ -182,7 +158,6 @@
       },
       "block_order": [
         "q1",
-        "q2",
         "q3",
         "q4",
         "q5"
@@ -196,11 +171,14 @@
     "find": {
       "type": "fy-find",
       "settings": {
-        "heading": "Coming Soon —",
-        "heading_italic": "Where to Find Us",
-        "text": "<p>Fruitiply is making its way to select grocers, cafés, and markets. When retailer listings go live, you'll find every location right here.</p><p>Four of the nine juices — <strong>Love, Joy, Peace, and Kindness</strong> — are in stores now. The rest are pressing soon.</p>",
-        "note": "Online ordering and a retailer locator are in development. Join the community below to hear first when they arrive.",
-        "anchor": "find"
+        "eyebrow": "Coming Soon",
+        "heading": "Be First",
+        "heading_italic": "to Know",
+        "text": "<p>Fruitiply is getting ready for launch. Join the list to hear first when Love, Peace, and Joy become available, and where to find them.</p>",
+        "button_label": "Get first access",
+        "button_link": "#join",
+        "note": "[PLACEHOLDER] Launch updates and early access details to come.",
+        "anchor": "first-access"
       }
     },
     "join": {
@@ -208,7 +186,7 @@
       "settings": {
         "heading": "Join the",
         "heading_italic": "Community",
-        "text": "New juice drops, store announcements, and the occasional good word. No noise — we keep it fruitful.",
+        "text": "Launch news, first access, and the occasional good word. No noise — we keep it fruitful.",
         "anchor": "join",
         "show_newsletter": true,
         "newsletter_heading": "Get the Good News First",
@@ -221,8 +199,37 @@
         "contact_text": "Questions, retailer inquiries, or just want to share how you're multiplying good? We'd love to hear from you.",
         "contact_message_label": "Message",
         "contact_button": "Send Message",
-        "contact_success": "Message sent. We'll be in touch soon — thank you for reaching out."
-      }
+        "contact_success": "Message sent. We'll be in touch soon — thank you for reaching out.",
+        "benefits_heading": "What members get"
+      },
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "title": "[PLACEHOLDER] Member benefit",
+            "text": "Benefits are being defined."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "title": "[PLACEHOLDER] Member benefit",
+            "text": "Benefits are being defined."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "title": "[PLACEHOLDER] Member benefit",
+            "text": "Benefits are being defined."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
     },
     "mascot": {
       "type": "image-with-text",
@@ -261,12 +268,61 @@
         "padding_top": 64,
         "padding_bottom": 64
       }
+    },
+    "chapters": {
+      "type": "fy-chapters",
+      "blocks": {
+        "love": {
+          "type": "chapter",
+          "settings": {
+            "product": "love",
+            "chapter_label": "Chapter I",
+            "story": "",
+            "button_label": "Discover"
+          }
+        },
+        "peace": {
+          "type": "chapter",
+          "settings": {
+            "product": "peace",
+            "chapter_label": "Chapter II",
+            "story": "",
+            "button_label": "Discover"
+          }
+        },
+        "joy": {
+          "type": "chapter",
+          "settings": {
+            "product": "joy",
+            "chapter_label": "Chapter III",
+            "story": "",
+            "button_label": "Discover"
+          }
+        }
+      },
+      "block_order": [
+        "love",
+        "peace",
+        "joy"
+      ],
+      "settings": {
+        "eyebrow": "Coming Soon",
+        "heading": "The First",
+        "heading_italic": "Chapters",
+        "text": "[PLACEHOLDER] Short introduction to Love, Peace, and Joy as the beginning of the story. Final narrative copy to come.",
+        "anchor": "juices",
+        "label_coming_soon": "Coming Soon",
+        "label_in_stores": "In Stores",
+        "label_online": "Available Online",
+        "label_flavor": "Flavor profile",
+        "label_ingredients": "Ingredients"
+      }
     }
   },
   "order": [
     "hero",
+    "chapters",
     "pillars",
-    "juices",
     "story",
     "faq",
     "find",

@@ -23,6 +23,22 @@
       {%- endif -%}
     </div>
 
+    {%- if section.blocks.size > 0 -%}
+      <div class="fy-benefits">
+        {%- if section.settings.benefits_heading != blank -%}
+          <h3 class="fy-benefits__heading">{{ section.settings.benefits_heading | escape }}</h3>
+        {%- endif -%}
+        <ul class="fy-benefits__list" role="list">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <strong>{{ block.settings.title | escape }}</strong>
+              {%- if block.settings.text != blank -%}<span>{{ block.settings.text | escape }}</span>{%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
     <div class="fy-connect__grid">
       {%- if section.settings.show_newsletter -%}
         <div>
@@ -119,6 +135,7 @@
     { "type": "text", "id": "heading_italic", "label": "Heading, italic ending", "default": "Community" },
     { "type": "textarea", "id": "text", "label": "Intro text" },
     { "type": "text", "id": "anchor", "label": "Link anchor", "info": "Links to #join jump here.", "default": "join" },
+    { "type": "text", "id": "benefits_heading", "label": "Member benefits heading", "default": "What members get" },
     { "type": "header", "content": "Newsletter" },
     { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter signup", "default": true },
     { "type": "text", "id": "newsletter_heading", "label": "Heading", "default": "Get the Good News First" },
@@ -135,6 +152,17 @@
     { "type": "text", "id": "contact_button", "label": "Button label", "default": "Send Message" },
     { "type": "text", "id": "contact_success", "label": "Success message", "default": "Message sent. We'll be in touch soon — thank you for reaching out." }
   ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Member benefit",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Benefit" },
+        { "type": "textarea", "id": "text", "label": "Description" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
   "presets": [{ "name": "Fruitiply join + contact" }]
 }
 {% endschema %}

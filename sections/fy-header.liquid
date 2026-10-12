@@ -51,6 +51,11 @@
               </a>
             </li>
           {%- endfor -%}
+          {%- if section.settings.cta_label != blank -%}
+            <li class="fy-nav__cta-item">
+              <a href="{{ section.settings.cta_link | default: '#join' }}">{{ section.settings.cta_label | escape }}</a>
+            </li>
+          {%- endif -%}
         </ul>
       {%- endif -%}
       {%- if section.settings.cta_label != blank -%}

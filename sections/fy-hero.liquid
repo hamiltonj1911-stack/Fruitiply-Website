@@ -1,11 +1,13 @@
 {% comment %}
-  Fruitiply hero: eyebrow, two-line headline (second line italic), intro,
-  up to three buttons, and either the animated tree or an uploaded image.
+  Fruitiply hero (Act I): eyebrow, "Grow Good. Multiply Good." headline
+  (second line italic), intro, up to three buttons, and a large product image
+  (carton, produce, condensation). Until a photo is added, a soft sunlit
+  placeholder panel shows instead.
 {% endcomment %}
 
 <section class="fy fy-hero" id="top" aria-labelledby="FyHeroHeading-{{ section.id }}">
   <div class="fy-wrap fy-hero__grid">
-    <div>
+    <div class="fy-hero__copy">
       {%- if section.settings.eyebrow != blank -%}
         <p class="fy-eyebrow">{{ section.settings.eyebrow | escape }}</p>
       {%- endif -%}
@@ -33,26 +35,30 @@
       {%- endif -%}
     </div>
 
-    {%- if section.settings.image != blank -%}
-      <div class="fy-hero__visual">
+    <div class="fy-hero__visual">
+      {%- if section.settings.image != blank -%}
         {{
           section.settings.image
-          | image_url: width: 1200
+          | image_url: width: 1600
           | image_tag:
             loading: 'eager',
             fetchpriority: 'high',
-            sizes: '(min-width: 900px) 40vw, 90vw',
-            widths: '400, 600, 800, 1000, 1200',
+            sizes: '(min-width: 900px) 50vw, 100vw',
+            widths: '500, 700, 900, 1200, 1600',
             alt: section.settings.image.alt
         }}
-        {%- render 'fy-hero-badge', section: section -%}
-      </div>
-    {%- else -%}
-      <div class="fy-hero__visual" role="img" aria-label="{{ section.settings.tree_alt | escape }}">
-        {%- render 'fy-tree' -%}
-        {%- render 'fy-hero-badge', section: section -%}
-      </div>
-    {%- endif -%}
+      {%- else -%}
+        <div class="fy-hero__placeholder" aria-hidden="true"></div>
+      {%- endif -%}
+      {%- if section.settings.badge_title != blank or section.settings.badge_text != blank -%}
+        <div class="fy-hero__badge">
+          {%- if section.settings.badge_title != blank -%}
+            <strong>{{ section.settings.badge_title | escape }}</strong>
+          {%- endif -%}
+          {{- section.settings.badge_text | escape -}}
+        </div>
+      {%- endif -%}
+    </div>
   </div>
 </section>
 
@@ -61,20 +67,19 @@
   "name": "Fruitiply hero",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Small text above heading", "default": "Premium Cold-Pressed Juice · Nine Fruits of the Spirit" },
+    { "type": "text", "id": "eyebrow", "label": "Small text above heading", "default": "Premium Cold-Pressed Juice" },
     { "type": "text", "id": "heading_line_1", "label": "Heading, line 1", "default": "Grow Good." },
     { "type": "text", "id": "heading_line_2", "label": "Heading, line 2 (italic)", "default": "Multiply Good." },
-    { "type": "textarea", "id": "text", "label": "Intro text", "default": "Nine cold-pressed juices, each named for a Fruit of the Spirit — crafted to nourish your body, grow your habits, and gather your people around something good." },
-    { "type": "header", "content": "Visual" },
+    { "type": "textarea", "id": "text", "label": "Intro text" },
+    { "type": "header", "content": "Image" },
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Image",
-      "info": "Leave empty to show the animated tree."
+      "label": "Product image",
+      "info": "Carton or bottle with fresh produce, texture, light. Tall (4:5) or square images work best. Add alt text in the image settings."
     },
-    { "type": "text", "id": "tree_alt", "label": "Animated tree description (for screen readers)", "default": "Animated tree bearing nine fruits, with gentle spirits rising around it" },
-    { "type": "text", "id": "badge_title", "label": "Badge title", "default": "Nine Juices. Nine Virtues." },
-    { "type": "text", "id": "badge_text", "label": "Badge text", "default": "One good habit at a time." }
+    { "type": "text", "id": "badge_title", "label": "Badge title", "info": "Small card over the image. Leave empty to hide." },
+    { "type": "text", "id": "badge_text", "label": "Badge text" }
   ],
   "blocks": [
     {
@@ -102,8 +107,7 @@
       "name": "Fruitiply hero",
       "blocks": [
         { "type": "button", "settings": { "label": "Explore the Juices", "link": "#juices", "style": "solid" } },
-        { "type": "button", "settings": { "label": "Our Story", "link": "#story", "style": "outline" } },
-        { "type": "button", "settings": { "label": "Join the Community", "link": "#join", "style": "outline" } }
+        { "type": "button", "settings": { "label": "Our Story", "link": "#story", "style": "outline" } }
       ]
     }
   ]
