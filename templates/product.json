@@ -40,10 +40,9 @@
           }
         },
         "virtue": {
-          "type": "text",
+          "type": "custom_liquid",
           "settings": {
-            "text": "{{ product.metafields.fruitiply.virtue.value }}",
-            "text_style": "uppercase"
+            "custom_liquid": "{%- assign virtue = product.metafields.fruitiply.virtue.value -%}{%- if virtue != blank -%}<p class=\"product__text caption-with-letter-spacing\">{{ virtue | escape }}</p>{%- endif -%}"
           }
         }
       },
